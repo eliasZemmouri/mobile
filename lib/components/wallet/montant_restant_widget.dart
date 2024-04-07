@@ -11,6 +11,12 @@ class MontantRestantWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(); // Votre widget MontantRestantWidget ici
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Text(
+        'Montant restant : $creditsRestants crédits',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+    );
   }
 }

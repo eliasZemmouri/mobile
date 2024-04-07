@@ -16,6 +16,12 @@ class LogementsPage extends StatelessWidget {
       color: Colors.blue,
       icon: Icons.home,
     ),
+    CategoryCardData(
+      title: 'Maisonette',
+      distance: 3.5,
+      color: Colors.blue,
+      icon: Icons.home,
+    ),
     // Ajoutez d'autres logements ici
   ];
 

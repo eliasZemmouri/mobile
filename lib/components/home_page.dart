@@ -7,7 +7,6 @@ import 'bottom_buttons.dart';
 import 'bouttons_menu/mes_points_page.dart';
 import 'bouttons_menu/parametres_page.dart';
 import 'wallet/historique_achats_block.dart';
-import 'wallet/montant_restant_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int creditsRestants = 100;
-  int _selectedBottomButtonIndex = 1; // Index du bouton de portefeuille sélectionné
+  int _selectedBottomButtonIndex = 1;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -32,6 +31,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Widget _buildSelectedPage(int index) {
+    switch (index) {
+      case 0:
+        return AccueilPage();
+      case 1:
+        return HistoriqueAchatsBlock(
+          historiqueAchats: [
+            HistoriqueAchat('Article 1', 10),
+            HistoriqueAchat('Article 2', 20),
+            HistoriqueAchat('Article 3', 15),
+            HistoriqueAchat('Article 4', 150),
+          ],
+          creditsRestants: creditsRestants,
+          modifierCredits: modifierCredits, // Passer modifierCredits ici
+        );
+      case 2:
+        return TachesPage();
+      default:
+        return Container();
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +62,8 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(0), // Aucun espace réservé en bas de l'AppBar
-          child: Container(), // Contenu vide pour éviter l'espace
+          preferredSize: Size.fromHeight(0),
+          child: Container(),
         ),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -99,10 +121,9 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Mes Points'),
                 onTap: () {
                   Navigator.pop(context);
-                  // Naviguer vers la page "Mes Points"
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MesPointsPage()), // Créez cette page
+                    MaterialPageRoute(builder: (context) => MesPointsPage()),
                   );
                 },
               ),
@@ -110,10 +131,9 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Paramètres'),
                 onTap: () {
                   Navigator.pop(context);
-                  // Naviguer vers la page "Paramètres"
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ParametresPage()), // Créez cette page
+                    MaterialPageRoute(builder: (context) => ParametresPage()),
                   );
                 },
               ),
@@ -124,22 +144,10 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            MontantRestantWidget(
-              creditsRestants: creditsRestants,
-              modifierCredits: modifierCredits,
-            ),
             Expanded(
-              child: _selectedBottomButtonIndex == 0
-                  ? AccueilPage()
-                  : _selectedBottomButtonIndex == 1
-                  ? HistoriqueAchatsBlock([
-                HistoriqueAchat('Article 1', 10),
-                HistoriqueAchat('Article 2', 20),
-                HistoriqueAchat('Article 3', 15),
-              ])
-                  : TachesPage(),
+              child: _buildSelectedPage(_selectedBottomButtonIndex),
             ),
-            BottomButtons(_selectedBottomButtonIndex, _onButtonTap), // Affichage des boutons en bas
+            BottomButtons(_selectedBottomButtonIndex, _onButtonTap),
           ],
         ),
       ),

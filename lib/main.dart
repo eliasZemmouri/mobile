@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Mon Application',
       theme: ThemeData(
         primaryColor: Colors.blue,
-        accentColor: Colors.blueAccent,
+        hintColor: Colors.blueAccent,
         fontFamily: 'Roboto',
       ),
       home: HomePage(),

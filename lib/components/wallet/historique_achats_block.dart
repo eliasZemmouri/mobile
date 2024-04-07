@@ -1,36 +1,52 @@
 import 'package:flutter/material.dart';
+import 'montant_restant_widget.dart';
 
 class HistoriqueAchatsBlock extends StatelessWidget {
   final List<HistoriqueAchat> historiqueAchats;
+  final int creditsRestants;
+  final Function(int) modifierCredits;
 
-  HistoriqueAchatsBlock(this.historiqueAchats);
+  HistoriqueAchatsBlock({
+    required this.historiqueAchats,
+    required this.creditsRestants,
+    required this.modifierCredits,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            ExpansionTile(
-              title: Text(
-                'Historique d\'achats',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
+      child: Column(
+        children: [
+          MontantRestantWidget(
+            creditsRestants: creditsRestants,
+            modifierCredits: modifierCredits,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
               children: [
-                for (int index = 0; index < historiqueAchats.length; index++)
-                  HistoriqueAchatCard(
-                    nomArticle: historiqueAchats[index].nomArticle,
-                    montant: historiqueAchats[index].montant,
+                ExpansionTile(
+                  title: Text(
+                    'Historique d\'achats',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
+                  children: [
+                    for (int index = 0; index < historiqueAchats.length; index++)
+                      HistoriqueAchatCard(
+                        nomArticle: historiqueAchats[index].nomArticle,
+                        montant: historiqueAchats[index].montant,
+                      ),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 class HistoriqueAchatCard extends StatelessWidget {
   final String nomArticle;
