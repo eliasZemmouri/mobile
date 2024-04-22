@@ -9,60 +9,97 @@ class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue[100], // Couleur bleue claire pour l'arrière-plan
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          BottomButton(
-            icon: Icons.home,
-            isSelected: selectedIndex == 0,
-            onTap: () {
-              onButtonTap(0);
-            },
-          ),
-          BottomButton(
-            icon: Icons.account_balance_wallet,
-            isSelected: selectedIndex == 1,
-            onTap: () {
-              onButtonTap(1);
-            },
-          ),
-          BottomButton(
-            icon: Icons.assignment,
-            isSelected: selectedIndex == 2,
-            onTap: () {
-              onButtonTap(2);
-            },
-          ),
-        ],
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.grey, width: 0.3),
+        ),
+      ),
+      child: Container(
+        color: Colors.white, // Couleur bleue claire pour l'arrière-plan
+        padding: EdgeInsets.only(top: 12, bottom: 32), // Ajoute un padding en haut et en bas
+        alignment: Alignment.center, // Centrer le contenu verticalement
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            BottomButton(
+              iconUrl: 'assets/icons/icons8-home-48.png',
+              label: 'Accueil',
+              isSelected: selectedIndex == 0,
+              onTap: () {
+                onButtonTap(0);
+              },
+              selectedColor: Colors.black,
+              unselectedColor: Colors.blue[300]!,
+            ),
+            BottomButton(
+              iconUrl: 'assets/icons/icons8-wallet-50.png',
+              label: 'Portefeuille',
+              isSelected: selectedIndex == 1,
+              onTap: () {
+                onButtonTap(1);
+              },
+              selectedColor: Colors.black,
+              unselectedColor: Colors.blue[300]!,
+            ),
+            BottomButton(
+              iconUrl: 'assets/icons/icons8-sheets-48.png',
+              label: 'Tâches',
+              isSelected: selectedIndex == 2,
+              onTap: () {
+                onButtonTap(2);
+              },
+              selectedColor: Colors.black,
+              unselectedColor: Colors.blue[300]!,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class BottomButton extends StatelessWidget {
-  final IconData icon;
+  final String iconUrl;
+  final String label;
   final bool isSelected;
   final VoidCallback onTap;
+  final Color selectedColor;
+  final Color unselectedColor;
 
   BottomButton({
-    required this.icon,
+    required this.iconUrl,
+    required this.label,
     required this.isSelected,
     required this.onTap,
+    required this.selectedColor,
+    required this.unselectedColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    Color iconColor = isSelected ? selectedColor : unselectedColor;
+
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
-        child: Container(
-          color: isSelected ? Colors.blue : Colors.transparent,
-          padding: EdgeInsets.all(16),
-          child: Icon(
-            icon,
-            color: Colors.white,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              iconUrl,
+              color: iconColor,
+              width: 25,
+              height: 25,
+            ),
+            SizedBox(height: 1),
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 8,
+              ),
+            ),
+          ],
         ),
       ),
     );
