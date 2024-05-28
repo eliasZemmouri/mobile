@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart' show rootBundle;
-import './produit.dart';
+import 'package:user_project/data/produit.dart';
+
 
 class ProduitService {
   final String apiBaseUrl = 'http://localhost:8080/api/produits';
@@ -11,13 +11,10 @@ class ProduitService {
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      print('saluto');
+      print('Réponse JSON : $jsonResponse'); // Log de débogage
       return jsonResponse.map((produit) => Produit.fromJson(produit)).toList();
     } else {
       throw Exception('Failed to load produits');
     }
   }
-
-
-// Add other methods as needed
 }
