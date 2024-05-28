@@ -39,7 +39,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
         final Produit produit = _produits[index];
         return CategoryCard(
           data: CategoryCardData(
-            title: produit.title,
+            title: produit.titre,
             latitude: produit.latitude,
             longitude: produit.longitude,
             color: Colors.orange,

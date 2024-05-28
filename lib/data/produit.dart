@@ -1,25 +1,34 @@
 class Produit {
   final String id;
-  final String title;
-  final double latitude;
+  final String titre;
+  final String description;
+  final String type;
   final double longitude;
-  final String imageUrl;
+  final double latitude;
+  final DateTime dateAjout;
+  final bool actif;
 
   Produit({
     required this.id,
-    required this.title,
-    required this.latitude,
+    required this.titre,
+    required this.description,
+    required this.type,
     required this.longitude,
-    required this.imageUrl,
+    required this.latitude,
+    required this.dateAjout,
+    required this.actif,
   });
 
   factory Produit.fromJson(Map<String, dynamic> json) {
     return Produit(
-      id: json['id'],
-      title: json['titre'] ?? "",
-      latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0,
-      longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,
-      imageUrl: json['imageUrl'] ?? "", // Vérification pour imageUrl si nécessaire
+      id: json['id'] ?? '',
+      titre: json['titre'] ?? '',
+      description: json['description'] ?? '',
+      type: json['type'] ?? '',
+      longitude: json['longitude'] != null ? double.parse(json['longitude'].toString()) : 0.0,
+      latitude: json['latitude'] != null ? double.parse(json['latitude'].toString()) : 0.0,
+      dateAjout: json['dateAjout'] != null ? DateTime.parse(json['dateAjout']) : DateTime.now(),
+      actif: json['actif'] ?? false,
     );
   }
 }
