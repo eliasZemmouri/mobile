@@ -36,15 +36,71 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return AccueilPage();
       case 1:
-        return HistoriqueAchatsBlock(
-          historiqueAchats: [
-            HistoriqueAchat('Article 1', 10),
-            HistoriqueAchat('Article 2', 20),
-            HistoriqueAchat('Article 3', 15),
-            HistoriqueAchat('Article 4', 150),
+        return Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Montant restant:',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '$creditsRestants crédits',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+            HistoriqueAchatsBlock(
+              historiqueAchats: [
+                HistoriqueAchat(
+                  '2022-01-01',
+                  'Paiement CB',
+                  'Article 1',
+                  10,
+                ),
+                HistoriqueAchat(
+                  '2022-01-02',
+                  'Virement interne',
+                  'Article 2',
+                  20,
+                ),
+                HistoriqueAchat(
+                  '2022-01-03',
+                  'Retrait distributeur',
+                  'Article 3',
+                  15,
+                ),
+                HistoriqueAchat(
+                  '2022-01-04',
+                  'Virement externe',
+                  'Article 4',
+                  150,
+                ),
+              ],
+              creditsRestants: creditsRestants,
+              modifierCredits: modifierCredits, // Passer modifierCredits ici
+            ),
           ],
-          creditsRestants: creditsRestants,
-          modifierCredits: modifierCredits, // Passer modifierCredits ici
         );
       case 2:
         return TachesPage();
@@ -52,7 +108,6 @@ class _HomePageState extends State<HomePage> {
         return Container();
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
