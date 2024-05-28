@@ -11,6 +11,7 @@ class ProduitService {
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
+      print('saluto');
       return jsonResponse.map((produit) => Produit.fromJson(produit)).toList();
     } else {
       throw Exception('Failed to load produits');

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class CategoryCardData {
   final String title;
-  final double distance;
+  final double latitude;
+  final double longitude;
   final Color color;
   final IconData icon;
 
   CategoryCardData({
     required this.title,
-    required this.distance,
+    required this.latitude,
+    required this.longitude,
     required this.color,
     required this.icon,
   });
@@ -38,7 +40,7 @@ class CategoryCard extends StatelessWidget {
                 children: [
                   ListTile(
                     title: Text(data.title),
-                    subtitle: Text('Distance: ${data.distance} km'),
+                    subtitle: Text('latitude: ${data.latitude} et longitude ${data.longitude}'),
                     leading: Icon(data.icon),
                   ),
                   Spacer(),
@@ -73,7 +75,7 @@ class CategoryCard extends StatelessWidget {
           child: ListTile(
             leading: Icon(data.icon),
             title: Text(data.title),
-            subtitle: Text('${data.distance} km'),
+            subtitle: Text(' ${data.latitude} et ${data.longitude}'),
           ),
         ),
       ),

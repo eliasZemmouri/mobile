@@ -6,13 +6,15 @@ class DivertissementsPage extends StatelessWidget {
   final List<CategoryCardData> divertissements = [
     CategoryCardData(
       title: 'Divertissement 1',
-      distance: 4.0,
+      latitude: 4.0,
+      longitude: 4.0,
       color: Colors.purple,
       icon: Icons.games,
     ),
     CategoryCardData(
       title: 'Divertissement 2',
-      distance: 6.0,
+      latitude: 4.0,
+      longitude: 4.0,
       color: Colors.purple,
       icon: Icons.games,
     ),

@@ -40,7 +40,8 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
         return CategoryCard(
           data: CategoryCardData(
             title: produit.title,
-            distance: 0.0, // Set the distance as needed
+            latitude: produit.latitude,
+            longitude: produit.longitude,
             color: Colors.orange,
             icon: Icons.restaurant,
           ),
