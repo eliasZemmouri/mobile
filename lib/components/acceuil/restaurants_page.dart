@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'dart:math' as math;
 import 'category_card.dart';
 import '../../data/produit.dart';
 import '../../data/produit_service.dart';
@@ -25,31 +24,13 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
     try {
       _currentPosition = await _getCurrentLocation();
       final produits = await _produitService.fetchAllProduits();
-      final filteredProduits = produits.where((produit) {
-        final distance = calculateDistance(
-          _currentPosition.latitude,
-          _currentPosition.longitude,
-          produit.latitude,
-          produit.longitude,
-        );
-        return distance <= 5; // Filtrer les produits dans un rayon de 5 km
-      }).toList();
 
       setState(() {
-        _produits = filteredProduits;
+        _produits = produits;
       });
     } catch (e) {
       print("Erreur lors du chargement des produits: $e");
     }
-  }
-
-  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    const p = 0.017453292519943295; // Pi / 180
-    final c = math.cos;
-    final a = 0.5 - c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) *
-            (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742 * math.asin(math.sqrt(a)); // 2 * R * asin(sqrt(a)), R = 6371 km
   }
 
   Future<Position> _getCurrentLocation() async {

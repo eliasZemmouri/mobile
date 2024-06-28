@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return AccueilPage();
       case 1:
-        return Column(
+        return SingleChildScrollView(
+            child: Column(
           children: [
             Container(
               decoration: BoxDecoration(
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
               creditsRestants: creditsRestants,
               modifierCredits: modifierCredits, // Passer modifierCredits ici
             ),
-          ],
+          ],)
         );
       case 2:
         return TachesPage();
