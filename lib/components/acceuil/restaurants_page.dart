@@ -23,7 +23,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
   Future<void> _loadProduits() async {
     try {
       _currentPosition = await _getCurrentLocation();
-      final produits = await _produitService.fetchAllProduits();
+      final produits = await _produitService.fetchFilteredProduits("Restaurant", _currentPosition.latitude, _currentPosition.longitude, 5.00);
 
       setState(() {
         _produits = produits;

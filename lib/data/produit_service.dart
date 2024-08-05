@@ -20,7 +20,8 @@ class ProduitService {
     }
   }
   Future<List<Produit>> fetchFilteredProduits(String type, double latitude, double longitude, double rayon) async {
-    final response = await http.get(Uri.parse('$apiBaseUrl/filtre?type=$type&latitude=$latitude&longitude=$longitude&rayon=$rayon'));
+    print('je passe');
+    final response = await http.get(Uri.parse('$apiBaseUrl/nearby?type=$type&latitude=$latitude&longitude=$longitude'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
