@@ -1,40 +1,78 @@
 import 'package:flutter/material.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'category_card.dart';
+import '../../data/produit.dart';
+import '../../data/produit_service.dart';
 
-class LogementsPage extends StatelessWidget {
-  final List<CategoryCardData> logements = [
-    CategoryCardData(
-      title: 'Logement 1',
-      latitude: 4.0,
-      longitude: 4.0,
-      color: Colors.blue,
-      icon: Icons.home,
-    ),
-    CategoryCardData(
-      title: 'Logement 2',
-      latitude: 4.0,
-      longitude: 4.0,
-      color: Colors.blue,
-      icon: Icons.home,
-    ),
-    CategoryCardData(
-      title: 'Maisonette',
-      latitude: 4.0,
-      longitude: 4.0,
-      color: Colors.blue,
-      icon: Icons.home,
-    ),
-    // Ajoutez d'autres logements ici
-  ];
+class LogementsPage extends StatefulWidget {
+  @override
+  _LogementsPageState createState() => _LogementsPageState();
+}
+
+class _LogementsPageState extends State<LogementsPage> {
+  final ProduitService _produitService = ProduitService();
+  late List<Produit> _produits = [];
+  late Position _currentPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProduits();
+  }
+
+  Future<void> _loadProduits() async {
+    try {
+      _currentPosition = await _getCurrentLocation();
+      final produits = await _produitService.fetchFilteredProduits("Logement", _currentPosition.latitude, _currentPosition.longitude, 5.00);
+
+      setState(() {
+        _produits = produits;
+      });
+    } catch (e) {
+      print("Erreur lors du chargement des produits: $e");
+    }
+  }
+
+  Future<Position> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Vérifier si les services de localisation sont activés
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Les services de localisation sont désactivés.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Les permissions de localisation sont refusées.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Les permissions de localisation sont refusées en permanence.');
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: logements.length,
+      itemCount: _produits.length,
       itemBuilder: (context, index) {
+        final Produit produit = _produits[index];
         return CategoryCard(
-          data: logements[index],
+          data: CategoryCardData(
+            title: produit.titre,
+            latitude: produit.latitude,
+            longitude: produit.longitude,
+            color: Colors.blue,
+            icon: Icons.home,
+          ),
         );
       },
     );
