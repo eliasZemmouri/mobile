@@ -50,22 +50,25 @@ class _AccueilPageState extends State<AccueilPage> {
             });
           },
           child: Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: _selectedIndex == index ? Colors.blue : Colors.grey,
-              boxShadow: [
-                if (_selectedIndex == index)
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                  ),
-              ],
+              border: _selectedIndex == index
+                  ? Border(
+                bottom: BorderSide(
+                  color: Colors.blueAccent,
+                  width: 7.0,
+                ),
+              )
+                  : null,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(0),
+                bottomRight: Radius.circular(0),
+              ),
             ),
             child: Icon(
               _icons[index],
               size: 25,
-              color: Colors.white,
+              color: _selectedIndex == index ? Colors.blue : Colors.grey,
             ),
           ),
         ),
